@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown-Timer im Digital-Wecker-Stil</title>
+  <title>Diagonaler Hintergrund mit einem Hintergrundbild</title>
+  <style>
+    body {
+      background-image: url('pfad/zum/bild.jpg'); /* Fügen Sie den Pfad zu Ihrem Bild ein */
+      background-repeat: repeat; /* Wiederholt das Bild diagonal */
+      height: 100vh;
+      margin: 0;}
+
+  
+    @font-face {
+      font-family: 'DigitalFont';
+      src: url('font/digital-7/digital-7-mono.ttf') format('truetype');
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    
+
+    #timer-container {
+      font-family: 'DigitalFont';
+      font-size: 60px;
+      text-align: center;
+      background-color: black;
+      color: white;
+      padding: 30px;
+      width: 500px;
+      border-radius: 15px;
+      position: relative;
+    }
+
+    #timer {
+      font-family: 'DigitalFont';
+      font-size: 110px;
+      text-align: center;
+      margin-bottom: 50px;
+      color: #0acc94;
+      letter-spacing: 4px;
+    }
+
+    #timer-controls {
+      position: absolute;
+      top: 120px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    button {
+      background-color: #0acc94;
+      color: rgb(0, 0, 0);
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="timer-container">
+  <div id="timer">00:00:00</div>
+  <div id="timer-controls">
+    <button onclick="startTimer()">Start</button>
+    <button onclick="stopTimer()">Stop</button>
+  </div>
+</div>
+
+<script>
+  let hours = 23;
+  let minutes = 60;
+  let seconds = 0;
+  let timerInterval;
+
+  function startTimer() {
+    if (!timerInterval) {
+      timerInterval = setInterval(updateTimer, 1000);
+    }
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval);
+    timerInterval = undefined;
+  }
+
+  function updateTimer() {
+    if (hours === 0 && minutes === 0 && seconds === 0) {
+      stopTimer();
+      alert('Countdown abgelaufen!');
+      return;
+    }
+
+    if (seconds > 0) {
+      seconds--;
+    } else {
+      if (minutes > 0) {
+        seconds = 59;
+        minutes--;
+      } else {
+        if (hours > 0) {
+          minutes = 59;
+          seconds = 59;
+          hours--;
+        }
+      }
+    }
+
+    const formattedTime = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+    document.getElementById('timer').innerText = formattedTime;
+  }
+
+  function pad(number) {
+    return (number < 10 ? '0' : '') + number;
+  }
+</script>
+
+</body>
+</html>
